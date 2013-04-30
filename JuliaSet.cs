@@ -1,6 +1,4 @@
 using System;
-//using System.Collections.Generic;
-//using System.Text;
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,14 +17,29 @@ namespace FractalViewer
         private const float b2 = 1.5F;//b1 + length;
         private const int maxiter = 1000;
 
+        /// <summary>
+        /// Julia Set Constructor
+        /// </summary>
+        /// <param name="g">Graphics</param>
+        /// <param name="ComplexColors">Color Array</param>
         public JuliaSet(Graphics g, Color[] ComplexColors)
         {
             this.g = g;
             this.ComplexColors = ComplexColors;
         }
 
+        /// <summary>
+        /// Draw Julia Set
+        /// </summary>
+        /// <param name="width">int</param>
+        /// <param name="height">int</param>
+        /// <param name="real">float</param>
+        /// <param name="complex">float</param>
         public void draw(int width, int height, float real, float complex) 
         {
+            /*
+             * Create Brush & Pens
+             */
             Brush[] brushes = new Brush[MAX_COLORS];
             Pen[] pens = new Pen[MAX_COLORS];
 
@@ -36,6 +49,10 @@ namespace FractalViewer
                 pens[i] = new Pen(brushes[i], 2.0F);
             });
 
+
+            /*
+             * Compute & Draw Julia Set
+             */
             float c1 = real;
             float c2 = complex;
             float size = (length / width);
@@ -105,6 +122,7 @@ namespace FractalViewer
                 }
             }
 
+            //Dispose of pens & brushes
             Parallel.For(0, MAX_COLORS, delegate(int i)
             {
                 pens[i].Dispose();

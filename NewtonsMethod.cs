@@ -1,6 +1,4 @@
 using System;
-//using System.Collections.Generic;
-//using System.Text;
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,16 +12,15 @@ namespace FractalViewer
         private Color[] ComplexColors = new Color[MAX_COLORS];
         private const float epsilon = 0.01F;
         private const float a1 = -7.0F;
-        //private const float b1 = -7.0F;
         private const float length = 10.0F;
         private const int maxiter = 40;
         private const float a2 = 3.0F;//a1 + length;
-        //private const float b2 = 3.0F;//b1 + length;
+        private const float third = 0.33333F;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="g">Contol's Graphic</param>
+        /// <param name="g">Control's Graphic</param>
         /// <param name="ComplexColors">Color Array of size 9</param>
         public NewtonsMethod(Graphics g, Color[] ComplexColors)
         {
@@ -32,7 +29,7 @@ namespace FractalViewer
         }
 
         /// <summary>
-        /// Draws the newton's method
+        /// Draws the Newton's method
         /// </summary>
         /// <param name="width">width of the drawing surface</param>
         /// <param name="height">height of the drawing surface</param>
@@ -70,18 +67,13 @@ namespace FractalViewer
                             g.DrawLine(pens[0], viewpoint.X(x0), viewpoint.Y(y0), viewpoint.X(x0 + 1), viewpoint.Y(y0 + 1));
                             break;
                         }
-                        float x1 = (2 * x + (x * x - y * y) / z) * 0.33333F;
-                        float y1 = (2 * y - 2 * x * y / z) * 0.33333F;
+                        float x1 = (2 * x + (x * x - y * y) / z) * third;
+                        float y1 = (2 * y - 2 * x * y / z) * third;
                         if (Math.Abs(x - x1) < epsilon && Math.Abs(y - y1) < epsilon)
                         {
-                            if (x1 > 1)
+                            if(y1 <= 0)
                             {
-                                g.DrawLine(pens[1], viewpoint.X(x0), viewpoint.Y(y0), viewpoint.X(x0 + 1), viewpoint.Y(y0 + 1));
-                                break;
-                            }
-                            else if (x1 > 0)
-                            {
-                                g.DrawLine(pens[2], viewpoint.X(x0), viewpoint.Y(y0), viewpoint.X(x0 + 1), viewpoint.Y(y0 + 1));
+                                g.DrawLine(pens[4], viewpoint.X(x0), viewpoint.Y(y0), viewpoint.X(x0 + 1), viewpoint.Y(y0 + 1));
                                 break;
                             }
                             else if (y1 > 0)
@@ -89,9 +81,14 @@ namespace FractalViewer
                                 g.DrawLine(pens[3], viewpoint.X(x0), viewpoint.Y(y0), viewpoint.X(x0 + 1), viewpoint.Y(y0 + 1));
                                 break;
                             }
-                            else // y1 <= 0
+                            else if (x1 > 0)
                             {
-                                g.DrawLine(pens[4], viewpoint.X(x0), viewpoint.Y(y0), viewpoint.X(x0 + 1), viewpoint.Y(y0 + 1));
+                                g.DrawLine(pens[2], viewpoint.X(x0), viewpoint.Y(y0), viewpoint.X(x0 + 1), viewpoint.Y(y0 + 1));
+                                break;
+                            }
+                            else //if (x1 > 1)
+                            {
+                                g.DrawLine(pens[1], viewpoint.X(x0), viewpoint.Y(y0), viewpoint.X(x0 + 1), viewpoint.Y(y0 + 1));
                                 break;
                             }
                         }

@@ -1,8 +1,5 @@
 using System;
-//using System.Collections.Generic;
-//using System.Text;
 using System.Drawing;
-//using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,10 +7,12 @@ namespace FractalViewer
 {
     class Orbit
     {
-        private float seed = 0.1f;
         private Graphics g;
         private Color orbitColor;
-        private int displayCount = 50;
+        #region Properties
+        public float Seed {get; set;}
+        public int DisplayCount{ get; set;}
+        #endregion
 
         /// <summary>
         /// Constructor for Orbit
@@ -26,39 +25,8 @@ namespace FractalViewer
         {
             this.g = g;
             this.orbitColor = orbitColor;
-            this.seed = seed;
-            this.displayCount = displayCount;
-        }
-
-        /// <summary>
-        /// Seed Property
-        /// </summary>
-        public float Seed
-        {
-            get
-            {
-                return this.seed;
-            }
-            set
-            {
-                this.seed = value;
-            }
-        }
-
-        /// <summary>
-        /// Display Count Property
-        /// </summary>
-        public int DisplayCount
-        {
-            get
-            {
-                return this.displayCount;
-            }
-            set
-            {
-                this.displayCount = value;
-            }
-
+            this.Seed = seed;
+            this.DisplayCount = displayCount;
         }
 
         /// <summary>
@@ -68,58 +36,49 @@ namespace FractalViewer
         /// <param name="height">height of control</param>
         public void Draw(int width, int height)
         {
-            //Graph Color
-            Brush blackBrush = new SolidBrush(Color.Black);
-            Pen blackPen = new Pen(blackBrush, 1F);
-
-            int Points = 2000;
-            PointF[] parabola = new PointF[Points];
-
             //Resize and shift to fit.
             FractalViewer.ViewPoint viewPoint = new ViewPoint(3, width, height);
 
-
-            /*
-             * Draw parabola and x=y line
-             */
-            //Get points of parabola
-            Parallel.For(0, Points, delegate(int x)
+            using(Brush blackBrush = new SolidBrush(Color.Black))
+            using (Pen blackPen = new Pen(blackBrush, 1F))
             {
-                parabola[x] = new PointF(viewPoint.X((float)(-3 + (x * .005))), viewPoint.Y((float)((-3 + (x * .005)) * (-3 + (x * .005)) - 2)));
-            });
+                int Points = 2000;
+                PointF[] parabola = new PointF[Points];
 
+                /*
+                 * Draw parabola and x=y line
+                 */
+                //Get points of parabola
+                Parallel.For(0, Points, delegate(int x)
+                {
+                    parabola[x] = new PointF(viewPoint.X((float)(-3 + (x * .005))), viewPoint.Y((float)((-3 + (x * .005)) * (-3 + (x * .005)) - 2)));
+                });
 
-            //draw parabola
-            g.DrawLines(blackPen, parabola);
-            
-            
-            //Draw grid
-            g.DrawLine(blackPen, viewPoint.X(-3), viewPoint.Y(-3), viewPoint.X(3), viewPoint.Y(3));//Draws diagaonal
-            g.DrawLine(blackPen, viewPoint.X(0), viewPoint.Y(-3), viewPoint.X(0), viewPoint.Y(5)); //Draws vertical
-            g.DrawLine(blackPen, viewPoint.X(-3), viewPoint.Y(0), viewPoint.X(3), viewPoint.Y(0)); //Draws horizontal
+                //draw parabola
+                g.DrawLines(blackPen, parabola);
 
-            blackPen.Dispose();
-            blackBrush.Dispose();
+                //Draw grid
+                g.DrawLine(blackPen, viewPoint.X(-3), viewPoint.Y(-3), viewPoint.X(3), viewPoint.Y(3));//Draws diagonal
+                g.DrawLine(blackPen, viewPoint.X(0), viewPoint.Y(-3), viewPoint.X(0), viewPoint.Y(5)); //Draws vertical
+                g.DrawLine(blackPen, viewPoint.X(-3), viewPoint.Y(0), viewPoint.X(3), viewPoint.Y(0)); //Draws horizontal
 
+            }
 
             /*
              * Draw orbit paths
              */
-            Brush orbitBrush = new SolidBrush(orbitColor);
-            Pen orbitPen = new Pen(orbitBrush, 1F);
-            
-            float y;
-            for (int i = 0; i < displayCount; i++)
+            using(Brush orbitBrush = new SolidBrush(orbitColor))
+            using (Pen orbitPen = new Pen(orbitBrush, 1F))
             {
-                y = seed * seed - 2;
-                g.DrawLine(orbitPen, viewPoint.X(seed), viewPoint.Y(seed), viewPoint.X(seed), viewPoint.Y(y));
-                g.DrawLine(orbitPen, viewPoint.X(seed), viewPoint.Y(y), viewPoint.X(y), viewPoint.Y(y));
-                seed = y;
+                float y;
+                for (int i = 0; i < DisplayCount; i++)
+                {
+                    y = Seed * Seed - 2;
+                    g.DrawLine(orbitPen, viewPoint.X(Seed), viewPoint.Y(Seed), viewPoint.X(Seed), viewPoint.Y(y));
+                    g.DrawLine(orbitPen, viewPoint.X(Seed), viewPoint.Y(y), viewPoint.X(y), viewPoint.Y(y));
+                    Seed = y;
+                }
             }
-
-            orbitPen.Dispose();
-            orbitBrush.Dispose();
-
         }
     }
 }

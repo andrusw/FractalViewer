@@ -250,6 +250,7 @@ namespace FractalViewer
             this.menuItemSaveImageAs.Index = 2;
             this.menuItemSaveImageAs.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
             this.menuItemSaveImageAs.Text = "&Save Image  As...";
+            this.menuItemSaveImageAs.Click += new System.EventHandler(this.menuItemSaveImageAs_Click);
             // 
             // menuItemDivider1
             // 

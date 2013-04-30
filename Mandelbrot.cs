@@ -1,6 +1,4 @@
 using System;
-//using System.Collections.Generic;
-//using System.Text;
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,13 +17,22 @@ namespace FractalViewer
         private const float a2 = 6F; //(float)(a1 + length);
         private const float b2 = 5F;//(float)(b1 + length);
 
-
+        /// <summary>
+        /// Mandelbrot Constructor
+        /// </summary>
+        /// <param name="g">Graphics</param>
+        /// <param name="ComplexColor">Color Array</param>
         public Mandelbrot(Graphics g, Color[] ComplexColor)
         {
             this.g = g;
             this.ComplexColor = ComplexColor;
         }
 
+        /// <summary>
+        /// Draw Mandelbrot
+        /// </summary>
+        /// <param name="width">int</param>
+        /// <param name="height">int</param>
         public void draw(int width, int height)
         {
             /*
@@ -107,6 +114,7 @@ namespace FractalViewer
                 }
             }
 
+            //Dispose of pens
             Parallel.For(0, MAX_COLORS, delegate(int colorCount)
             {
                 pens[colorCount].Dispose();

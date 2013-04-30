@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Andrus Development")]
 [assembly: AssemblyProduct("Fractal Viewer")]
-[assembly: AssemblyCopyright("2006-2008")]
+[assembly: AssemblyCopyright("2006-2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
 

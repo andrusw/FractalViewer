@@ -1,9 +1,6 @@
 using System;
 using System.Drawing;
-//using System.Collections;
-//using System.ComponentModel;
 using System.Windows.Forms;
-//using System.Data;
 //using System.Threading;
 
 namespace FractalViewer
@@ -12,9 +9,10 @@ namespace FractalViewer
 	/// Summary description for Form1.
 	/// </summary>
 	public class Form1 : System.Windows.Forms.Form
-	{
-		private System.Windows.Forms.PictureBox pictureBox1;
-		private System.Windows.Forms.MainMenu mainMenu1;
+    {
+        #region Form Items 
+        private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.MainMenu mainMenu;
 		private System.Windows.Forms.MenuItem menuItemFractalTitle;
 		private System.Windows.Forms.MenuItem menuItemHelpTitle;
 		private System.Windows.Forms.MenuItem menuItemOrbit_XsquareMinus2;
@@ -24,7 +22,7 @@ namespace FractalViewer
 		private System.Windows.Forms.Panel panelOrbit;
 		private System.Windows.Forms.MenuItem menuItemJuliaSet;
 		private System.ComponentModel.IContainer components;
-		private System.Windows.Forms.MenuItem menuItem7;
+		private System.Windows.Forms.MenuItem menuItemNewtonsMethodx4y42xy;
 		private System.Windows.Forms.MenuItem menuItemBoxFractal;
 		private System.Windows.Forms.MenuItem menuItemFractalsTitle;
 		private System.Windows.Forms.MenuItem menuItemComplexSystemTitle;
@@ -36,7 +34,7 @@ namespace FractalViewer
 		private System.Windows.Forms.MenuItem menuItemAbout;
 		private System.Windows.Forms.MenuItem menuItemSaveImageAs;
 		private System.Windows.Forms.MenuItem menuItemFileTitle;
-		private System.Windows.Forms.MenuItem menuItem14;
+		private System.Windows.Forms.MenuItem menuItemDivider1;
 		private System.Windows.Forms.MenuItem menuItemExit;
 		private System.Windows.Forms.NumericUpDown numericUpDownOrbitDispaly;
 		private System.Windows.Forms.Label labelViewLast;
@@ -68,23 +66,25 @@ namespace FractalViewer
 		private System.Windows.Forms.ColorDialog colorDialogComplex9;
 		private System.Windows.Forms.MenuItem menuItemOrbitsTitle;
         private System.Windows.Forms.MenuItem menuItemNewtonMethod;
-		private System.Windows.Forms.MenuItem menuItem35;
+		private System.Windows.Forms.MenuItem menuItemDivider2;
 		private System.Windows.Forms.MenuItem menuItemPrint;
-		private System.Drawing.Printing.PrintDocument printDocument1;
-		private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
-		private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
+		private System.Drawing.Printing.PrintDocument printDocument;
+		private System.Windows.Forms.PrintPreviewDialog printPreviewDialog;
+		private System.Windows.Forms.PageSetupDialog pageSetupDialog;
 		private System.Windows.Forms.MenuItem menuItemPageSetup;
 		private System.Windows.Forms.MenuItem menuItemNew;
-		private System.Windows.Forms.MenuItem menuItem39;
+		private System.Windows.Forms.MenuItem menuItemDivider3;
 		private System.Windows.Forms.MenuItem menuItemSierpinskiTriangle;
-
         private Point mouseDownLocation;
         private Label labelBoxFractal;
         private NumericUpDown numericUpDownBoxFractal;
         private NumericUpDown numericUpDownSierp;
         private Point mouseUpLocation;
+        #endregion
 
-		public Form1()
+        private Bitmap backBuffer;
+
+        public Form1()
 		{
 			//
 			// Required for Windows Form Designer support
@@ -96,7 +96,6 @@ namespace FractalViewer
             this.mouseUpLocation = new Point(this.pictureBox1.Width, this.pictureBox1.Height);
 
 			//Double Buffering
-
 			//this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer,true);
 
 		}
@@ -126,15 +125,15 @@ namespace FractalViewer
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
+            this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.menuItemFileTitle = new System.Windows.Forms.MenuItem();
             this.menuItemNew = new System.Windows.Forms.MenuItem();
-            this.menuItem39 = new System.Windows.Forms.MenuItem();
+            this.menuItemDivider3 = new System.Windows.Forms.MenuItem();
             this.menuItemSaveImageAs = new System.Windows.Forms.MenuItem();
-            this.menuItem14 = new System.Windows.Forms.MenuItem();
+            this.menuItemDivider1 = new System.Windows.Forms.MenuItem();
             this.menuItemPageSetup = new System.Windows.Forms.MenuItem();
             this.menuItemPrint = new System.Windows.Forms.MenuItem();
-            this.menuItem35 = new System.Windows.Forms.MenuItem();
+            this.menuItemDivider2 = new System.Windows.Forms.MenuItem();
             this.menuItemExit = new System.Windows.Forms.MenuItem();
             this.menuItemFractalTitle = new System.Windows.Forms.MenuItem();
             this.menuItemOrbitsTitle = new System.Windows.Forms.MenuItem();
@@ -146,7 +145,7 @@ namespace FractalViewer
             this.menuItemMandelbrotSet = new System.Windows.Forms.MenuItem();
             this.menuItemJuliaSet = new System.Windows.Forms.MenuItem();
             this.menuItemNewtonMethod = new System.Windows.Forms.MenuItem();
-            this.menuItem7 = new System.Windows.Forms.MenuItem();
+            this.menuItemNewtonsMethodx4y42xy = new System.Windows.Forms.MenuItem();
             this.menuItemColorTitle = new System.Windows.Forms.MenuItem();
             this.menuItemBackground = new System.Windows.Forms.MenuItem();
             this.menuItemColorOrbit = new System.Windows.Forms.MenuItem();
@@ -188,9 +187,9 @@ namespace FractalViewer
             this.colorDialogComplex7 = new System.Windows.Forms.ColorDialog();
             this.colorDialogComplex8 = new System.Windows.Forms.ColorDialog();
             this.colorDialogComplex9 = new System.Windows.Forms.ColorDialog();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
+            this.printDocument = new System.Drawing.Printing.PrintDocument();
+            this.printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
+            this.pageSetupDialog = new System.Windows.Forms.PageSetupDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelOrbit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSierp)).BeginInit();
@@ -212,9 +211,9 @@ namespace FractalViewer
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBoxPaint);
             // 
-            // mainMenu1
+            // mainMenu
             // 
-            this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemFileTitle,
             this.menuItemFractalTitle,
             this.menuItemColorTitle,
@@ -225,12 +224,12 @@ namespace FractalViewer
             this.menuItemFileTitle.Index = 0;
             this.menuItemFileTitle.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemNew,
-            this.menuItem39,
+            this.menuItemDivider3,
             this.menuItemSaveImageAs,
-            this.menuItem14,
+            this.menuItemDivider1,
             this.menuItemPageSetup,
             this.menuItemPrint,
-            this.menuItem35,
+            this.menuItemDivider2,
             this.menuItemExit});
             this.menuItemFileTitle.Text = "&File";
             // 
@@ -239,49 +238,48 @@ namespace FractalViewer
             this.menuItemNew.Index = 0;
             this.menuItemNew.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
             this.menuItemNew.Text = "&New";
-            this.menuItemNew.Click += new System.EventHandler(this.menuItem38_Click);
+            this.menuItemNew.Click += new System.EventHandler(this.menuItemNew_Click);
             // 
-            // menuItem39
+            // menuItemDivider3
             // 
-            this.menuItem39.Index = 1;
-            this.menuItem39.Text = "-";
+            this.menuItemDivider3.Index = 1;
+            this.menuItemDivider3.Text = "-";
             // 
             // menuItemSaveImageAs
             // 
             this.menuItemSaveImageAs.Index = 2;
             this.menuItemSaveImageAs.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
             this.menuItemSaveImageAs.Text = "&Save Image  As...";
-            this.menuItemSaveImageAs.Click += new System.EventHandler(this.menuItem12_Click);
             // 
-            // menuItem14
+            // menuItemDivider1
             // 
-            this.menuItem14.Index = 3;
-            this.menuItem14.Text = "-";
+            this.menuItemDivider1.Index = 3;
+            this.menuItemDivider1.Text = "-";
             // 
             // menuItemPageSetup
             // 
             this.menuItemPageSetup.Index = 4;
             this.menuItemPageSetup.Text = "Page Setup...";
-            this.menuItemPageSetup.Click += new System.EventHandler(this.menuItem37_Click);
+            this.menuItemPageSetup.Click += new System.EventHandler(this.menuItemPageSetup_Click);
             // 
             // menuItemPrint
             // 
             this.menuItemPrint.Index = 5;
             this.menuItemPrint.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
             this.menuItemPrint.Text = "Print";
-            this.menuItemPrint.Click += new System.EventHandler(this.menuItem36_Click);
+            this.menuItemPrint.Click += new System.EventHandler(this.menuItemPrint_Click);
             // 
-            // menuItem35
+            // menuItemDivider2
             // 
-            this.menuItem35.Index = 6;
-            this.menuItem35.Text = "-";
+            this.menuItemDivider2.Index = 6;
+            this.menuItemDivider2.Text = "-";
             // 
             // menuItemExit
             // 
             this.menuItemExit.Index = 7;
             this.menuItemExit.Shortcut = System.Windows.Forms.Shortcut.AltF4;
             this.menuItemExit.Text = "&Exit";
-            this.menuItemExit.Click += new System.EventHandler(this.menuItem15_Click);
+            this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
             // menuItemFractalTitle
             // 
@@ -303,7 +301,7 @@ namespace FractalViewer
             // 
             this.menuItemOrbit_XsquareMinus2.Index = 0;
             this.menuItemOrbit_XsquareMinus2.Text = "(x*x) - 2";
-            this.menuItemOrbit_XsquareMinus2.Click += new System.EventHandler(this.menuItem3_Click);
+            this.menuItemOrbit_XsquareMinus2.Click += new System.EventHandler(this.menuItemOrbit_XsquareMinus2_Click);
             // 
             // menuItemFractalsTitle
             // 
@@ -317,13 +315,13 @@ namespace FractalViewer
             // 
             this.menuItemBoxFractal.Index = 0;
             this.menuItemBoxFractal.Text = "Box Fractal";
-            this.menuItemBoxFractal.Click += new System.EventHandler(this.menuItem8_Click);
+            this.menuItemBoxFractal.Click += new System.EventHandler(this.menuItemBoxFractal_Click);
             // 
             // menuItemSierpinskiTriangle
             // 
             this.menuItemSierpinskiTriangle.Index = 1;
             this.menuItemSierpinskiTriangle.Text = "Sierpinski Triangle";
-            this.menuItemSierpinskiTriangle.Click += new System.EventHandler(this.menuItem6_Click);
+            this.menuItemSierpinskiTriangle.Click += new System.EventHandler(this.menuItemSierpinskiTriangle_Click);
             // 
             // menuItemComplexSystemTitle
             // 
@@ -338,26 +336,26 @@ namespace FractalViewer
             // 
             this.menuItemMandelbrotSet.Index = 0;
             this.menuItemMandelbrotSet.Text = "Mandelbrot Set (Medium CPU Load)";
-            this.menuItemMandelbrotSet.Click += new System.EventHandler(this.menuItem4_Click);
+            this.menuItemMandelbrotSet.Click += new System.EventHandler(this.menuItemMandelbrotSet_Click);
             // 
             // menuItemJuliaSet
             // 
             this.menuItemJuliaSet.Index = 1;
             this.menuItemJuliaSet.Text = "Julia Set (Low CPU Load)";
-            this.menuItemJuliaSet.Click += new System.EventHandler(this.menuItem5_Click);
+            this.menuItemJuliaSet.Click += new System.EventHandler(this.menuItemJuliaSet_Click);
             // 
             // menuItemNewtonMethod
             // 
             this.menuItemNewtonMethod.Index = 2;
             this.menuItemNewtonMethod.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem7});
+            this.menuItemNewtonsMethodx4y42xy});
             this.menuItemNewtonMethod.Text = "Newton\'s Method (High CPU Load)";
             // 
-            // menuItem7
+            // menuItemNewtonsMethodx4y42xy
             // 
-            this.menuItem7.Index = 0;
-            this.menuItem7.Text = "(x*x*x*x) + (y*y*y*y) + (2*x*x*y*y)";
-            this.menuItem7.Click += new System.EventHandler(this.menuItem7_Click);
+            this.menuItemNewtonsMethodx4y42xy.Index = 0;
+            this.menuItemNewtonsMethodx4y42xy.Text = "(x*x*x*x) + (y*y*y*y) + (2*x*x*y*y)";
+            this.menuItemNewtonsMethodx4y42xy.Click += new System.EventHandler(this.menuItemNewtonsMethodx4y42xy_Click);
             // 
             // menuItemColorTitle
             // 
@@ -373,19 +371,19 @@ namespace FractalViewer
             // 
             this.menuItemBackground.Index = 0;
             this.menuItemBackground.Text = "Background";
-            this.menuItemBackground.Click += new System.EventHandler(this.menuItem18_Click);
+            this.menuItemBackground.Click += new System.EventHandler(this.menuItemBackground_Click);
             // 
             // menuItemColorOrbit
             // 
             this.menuItemColorOrbit.Index = 1;
             this.menuItemColorOrbit.Text = "Orbit";
-            this.menuItemColorOrbit.Click += new System.EventHandler(this.menuItem17_Click);
+            this.menuItemColorOrbit.Click += new System.EventHandler(this.menuItemColorOrbit_Click);
             // 
             // menuItemColorFractals
             // 
             this.menuItemColorFractals.Index = 2;
             this.menuItemColorFractals.Text = "Fractals";
-            this.menuItemColorFractals.Click += new System.EventHandler(this.menuItem20_Click);
+            this.menuItemColorFractals.Click += new System.EventHandler(this.menuItemColorFractals_Click);
             // 
             // menuItemColorComplexSysTitle
             // 
@@ -406,55 +404,55 @@ namespace FractalViewer
             // 
             this.menuItemCSColor1.Index = 0;
             this.menuItemCSColor1.Text = "Color 1";
-            this.menuItemCSColor1.Click += new System.EventHandler(this.menuItem22_Click);
+            this.menuItemCSColor1.Click += new System.EventHandler(this.menuItemCSColor1_Click);
             // 
             // menuItemCSColor2
             // 
             this.menuItemCSColor2.Index = 1;
             this.menuItemCSColor2.Text = "Color 2";
-            this.menuItemCSColor2.Click += new System.EventHandler(this.menuItem23_Click);
+            this.menuItemCSColor2.Click += new System.EventHandler(this.menuItemCSColor2_Click);
             // 
             // menuItemCSColor3
             // 
             this.menuItemCSColor3.Index = 2;
             this.menuItemCSColor3.Text = "Color 3";
-            this.menuItemCSColor3.Click += new System.EventHandler(this.menuItem24_Click);
+            this.menuItemCSColor3.Click += new System.EventHandler(this.menuItemCSColor3_Click);
             // 
             // menuItemCSColor4
             // 
             this.menuItemCSColor4.Index = 3;
             this.menuItemCSColor4.Text = "Color 4";
-            this.menuItemCSColor4.Click += new System.EventHandler(this.menuItem25_Click);
+            this.menuItemCSColor4.Click += new System.EventHandler(this.menuItemCSColor4_Click);
             // 
             // menuItemCSColor5
             // 
             this.menuItemCSColor5.Index = 4;
             this.menuItemCSColor5.Text = "Color 5";
-            this.menuItemCSColor5.Click += new System.EventHandler(this.menuItem26_Click);
+            this.menuItemCSColor5.Click += new System.EventHandler(this.menuItemCSColor5_Click);
             // 
             // menuItemCSColor6
             // 
             this.menuItemCSColor6.Index = 5;
             this.menuItemCSColor6.Text = "Color 6";
-            this.menuItemCSColor6.Click += new System.EventHandler(this.menuItem27_Click);
+            this.menuItemCSColor6.Click += new System.EventHandler(this.menuItemCSColor6_Click);
             // 
             // menuItemCSColor7
             // 
             this.menuItemCSColor7.Index = 6;
             this.menuItemCSColor7.Text = "Color 7";
-            this.menuItemCSColor7.Click += new System.EventHandler(this.menuItem28_Click);
+            this.menuItemCSColor7.Click += new System.EventHandler(this.menuItemCSColor7_Click);
             // 
             // menuItemCSColor8
             // 
             this.menuItemCSColor8.Index = 7;
             this.menuItemCSColor8.Text = "Color 8";
-            this.menuItemCSColor8.Click += new System.EventHandler(this.menuItem29_Click);
+            this.menuItemCSColor8.Click += new System.EventHandler(this.menuItemCSColor8_Click);
             // 
             // menuItemCSColor9
             // 
             this.menuItemCSColor9.Index = 8;
             this.menuItemCSColor9.Text = "Color 9";
-            this.menuItemCSColor9.Click += new System.EventHandler(this.menuItem30_Click);
+            this.menuItemCSColor9.Click += new System.EventHandler(this.menuItemCSColor9_Click);
             // 
             // menuItemHelpTitle
             // 
@@ -467,7 +465,7 @@ namespace FractalViewer
             // 
             this.menuItemAbout.Index = 0;
             this.menuItemAbout.Text = "About";
-            this.menuItemAbout.Click += new System.EventHandler(this.menuItem11_Click);
+            this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
             // 
             // panelOrbit
             // 
@@ -555,7 +553,7 @@ namespace FractalViewer
             this.labelViewLast.Size = new System.Drawing.Size(86, 16);
             this.labelViewLast.TabIndex = 8;
             this.labelViewLast.Tag = "This program does 50 iterations, change this value to see the last (number) of th" +
-                "ese.";
+    "ese.";
             this.labelViewLast.Text = "View Last:";
             this.labelViewLast.Visible = false;
             // 
@@ -571,7 +569,7 @@ namespace FractalViewer
             this.numericUpDownOrbitDispaly.Size = new System.Drawing.Size(40, 20);
             this.numericUpDownOrbitDispaly.TabIndex = 7;
             this.numericUpDownOrbitDispaly.Tag = "Change this value to see the last number of iterations. This program only goes up" +
-                " to the first 50.";
+    " to the first 50.";
             this.numericUpDownOrbitDispaly.Value = new decimal(new int[] {
             50,
             0,
@@ -675,15 +673,15 @@ namespace FractalViewer
             this.numericUpDownReal.Name = "numericUpDownReal";
             this.numericUpDownReal.Size = new System.Drawing.Size(48, 20);
             this.numericUpDownReal.TabIndex = 2;
-            this.numericUpDownReal.Tag = "Changes this value, that represents the reals, to see the changes in the Julia Se" +
-                "t.";
+            this.numericUpDownReal.Tag = "Changes this value, that represents the real, to see the changes in the Julia Set" +
+    ".";
             this.numericUpDownReal.Value = new decimal(new int[] {
             290,
             0,
             0,
             196608});
             this.numericUpDownReal.Visible = false;
-            this.numericUpDownReal.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.numericUpDownReal.ValueChanged += new System.EventHandler(this.numericUpDownReal_ValueChanged);
             // 
             // numericUpDownComplex
             // 
@@ -708,14 +706,14 @@ namespace FractalViewer
             this.numericUpDownComplex.Size = new System.Drawing.Size(56, 20);
             this.numericUpDownComplex.TabIndex = 3;
             this.numericUpDownComplex.Tag = "Changes this value, that represents the imaginary, to see the changes in the Juli" +
-                "a Set. ";
+    "a Set. ";
             this.numericUpDownComplex.Value = new decimal(new int[] {
             5,
             0,
             0,
             -2147418112});
             this.numericUpDownComplex.Visible = false;
-            this.numericUpDownComplex.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.numericUpDownComplex.ValueChanged += new System.EventHandler(this.numericUpDownReal_ValueChanged);
             // 
             // colorDialog1
             // 
@@ -786,26 +784,26 @@ namespace FractalViewer
             this.colorDialogComplex9.ShowHelp = true;
             this.colorDialogComplex9.SolidColorOnly = true;
             // 
-            // printDocument1
+            // printDocument
             // 
-            this.printDocument1.DocumentName = "Fractal Viewer";
-            this.printDocument1.OriginAtMargins = true;
-            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
+            this.printDocument.DocumentName = "Fractal Viewer";
+            this.printDocument.OriginAtMargins = true;
+            this.printDocument.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument_PrintPage);
             // 
-            // printPreviewDialog1
+            // printPreviewDialog
             // 
-            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
-            this.printPreviewDialog1.Enabled = true;
-            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
-            this.printPreviewDialog1.Name = "printPreviewDialog1";
-            this.printPreviewDialog1.UseAntiAlias = true;
-            this.printPreviewDialog1.Visible = false;
+            this.printPreviewDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog.Enabled = true;
+            this.printPreviewDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog.Icon")));
+            this.printPreviewDialog.Name = "printPreviewDialog";
+            this.printPreviewDialog.UseAntiAlias = true;
+            this.printPreviewDialog.Visible = false;
             // 
-            // pageSetupDialog1
+            // pageSetupDialog
             // 
-            this.pageSetupDialog1.Document = this.printDocument1;
+            this.pageSetupDialog.Document = this.printDocument;
             // 
             // Form1
             // 
@@ -815,10 +813,10 @@ namespace FractalViewer
             this.Controls.Add(this.pictureBox1);
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Menu = this.mainMenu1;
+            this.Menu = this.mainMenu;
             this.Name = "Form1";
             this.Tag = "Fractal Viewer allows you to view some  of the images in Chaotic Dynamical System" +
-                "s";
+    "s";
             this.Text = "Fractal Viewer";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Resize += new System.EventHandler(this.Form1_Resize);
@@ -844,97 +842,97 @@ namespace FractalViewer
 			Application.Run(new Form1());
 		}
 
-
-
-		private Bitmap backBuffer;
-
-		protected override void OnPaintBackground(PaintEventArgs preventJ)
-		{
-		}
-
+        /// <summary>
+        /// Draw Chosen Fractal
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 		public void PictureBoxPaint(object sender, System.Windows.Forms.PaintEventArgs e)
 		{
-
 			if(backBuffer == null)
 			{
 				backBuffer = new Bitmap(this.pictureBox1.Width,this.pictureBox1.Height);
 			}
-			Graphics g = Graphics.FromImage(backBuffer);
-            //g.PageUnit = GraphicsUnit.Document;
-            Color[] ComplexColors = new Color[9];
-            ComplexColors[0] = this.colorDialogComplex1.Color;
-            ComplexColors[1] = this.colorDialogComplex2.Color;
-            ComplexColors[2] = this.colorDialogComplex3.Color;
-            ComplexColors[3] = this.colorDialogComplex4.Color;
-            ComplexColors[4] = this.colorDialogComplex5.Color;
-            ComplexColors[5] = this.colorDialogComplex6.Color;
-            ComplexColors[6] = this.colorDialogComplex7.Color;
-            ComplexColors[7] = this.colorDialogComplex8.Color;
-            ComplexColors[8] = this.colorDialogComplex9.Color;
-			
 
-			#region orbit
-			if(menuItemOrbit_XsquareMinus2.Checked)
-			{
-                FractalViewer.Orbit orbit = new Orbit(g, this.colorDialog1.Color, (float)this.numericUpDownSeed.Value, (int)this.numericUpDownOrbitDispaly.Value);
-                this.Cursor = Cursors.WaitCursor;
-                orbit.Draw(this.pictureBox1.Width, this.pictureBox1.Height);
-                this.Cursor = Cursors.Default;
-			}
-			#endregion
-			#region mandelbrot
-			else if(this.menuItemMandelbrotSet.Checked)
-			{
-                FractalViewer.Mandelbrot mandelbrot = new Mandelbrot(g,ComplexColors);
-                this.Cursor = Cursors.WaitCursor;
-                mandelbrot.draw(this.pictureBox1.Width, this.pictureBox1.Height);
-                this.Cursor = Cursors.Default;
-			}
-			#endregion
-			#region julia set
-			else if(this.menuItemJuliaSet.Checked)
-			{
-                FractalViewer.JuliaSet juliaset = new JuliaSet(g,ComplexColors);
-                this.Cursor = Cursors.WaitCursor;
-                juliaset.draw(this.pictureBox1.Width, this.pictureBox1.Height, (float)this.numericUpDownReal.Value, (float)this.numericUpDownComplex.Value);
-                this.Cursor = Cursors.Default;
-			}
-				#endregion
-			#region sierpinski triangle
-			else if(this.menuItemSierpinskiTriangle.Checked)
-			{
-                FractalViewer.SierpinskiTriangle sierp = new SierpinskiTriangle(g, this.colorDialog3.Color);
-                this.Cursor = Cursors.WaitCursor;
-                g.Clear(this.colorDialog2.Color);
-                sierp.draw(pictureBox1.Width, pictureBox1.Height, (float)this.numericUpDownSierp.Value);
-                this.Cursor = Cursors.Default;
-			}
-			#endregion
-			#region newton's method
-            else if (this.menuItem7.Checked)
+            using (Graphics g = Graphics.FromImage(backBuffer))
             {
-                FractalViewer.NewtonsMethod newton = new NewtonsMethod(g, ComplexColors);
-                this.Cursor = Cursors.WaitCursor;
-                newton.draw(this.pictureBox1.Width, this.pictureBox1.Height);
-                this.Cursor = Cursors.Default;
-            }
-            #endregion
-            #region Box Fractal
-            else if (this.menuItemBoxFractal.Checked)
-            {
-                FractalViewer.BoxFractal box = new BoxFractal(g, this.colorDialog2.Color, this.colorDialog3.Color, (float)this.numericUpDownBoxFractal.Value);
-                this.Cursor = Cursors.WaitCursor;
-                box.draw(this.pictureBox1.Width, this.pictureBox1.Height);
-                this.Cursor = Cursors.Default;
-            }
-			#endregion
-			g.Dispose();
-            e.Graphics.DrawImageUnscaled(backBuffer, 0, 0,this.pictureBox1.Width/700,this.pictureBox1.Height/700);
+                //g.PageUnit = GraphicsUnit.Document;
+                Color[] ComplexColors = new Color[9];
+                ComplexColors[0] = this.colorDialogComplex1.Color;
+                ComplexColors[1] = this.colorDialogComplex2.Color;
+                ComplexColors[2] = this.colorDialogComplex3.Color;
+                ComplexColors[3] = this.colorDialogComplex4.Color;
+                ComplexColors[4] = this.colorDialogComplex5.Color;
+                ComplexColors[5] = this.colorDialogComplex6.Color;
+                ComplexColors[6] = this.colorDialogComplex7.Color;
+                ComplexColors[7] = this.colorDialogComplex8.Color;
+                ComplexColors[8] = this.colorDialogComplex9.Color;
 
-            
-           
+                #region orbit
+                if (menuItemOrbit_XsquareMinus2.Checked)
+                {
+                    FractalViewer.Orbit orbit = new Orbit(g, this.colorDialog1.Color, (float)this.numericUpDownSeed.Value, (int)this.numericUpDownOrbitDispaly.Value);
+                    this.Cursor = Cursors.WaitCursor;
+                    orbit.Draw(this.pictureBox1.Width, this.pictureBox1.Height);
+                    this.Cursor = Cursors.Default;
+                }
+                #endregion
+                #region mandelbrot
+                else if (this.menuItemMandelbrotSet.Checked)
+                {
+                    FractalViewer.Mandelbrot mandelbrot = new Mandelbrot(g, ComplexColors);
+                    this.Cursor = Cursors.WaitCursor;
+                    mandelbrot.draw(this.pictureBox1.Width, this.pictureBox1.Height);
+                    this.Cursor = Cursors.Default;
+                }
+                #endregion
+                #region julia set
+                else if (this.menuItemJuliaSet.Checked)
+                {
+                    FractalViewer.JuliaSet juliaset = new JuliaSet(g, ComplexColors);
+                    this.Cursor = Cursors.WaitCursor;
+                    juliaset.draw(this.pictureBox1.Width, this.pictureBox1.Height, (float)this.numericUpDownReal.Value, (float)this.numericUpDownComplex.Value);
+                    this.Cursor = Cursors.Default;
+                }
+                #endregion
+                #region sierpinski triangle
+                else if (this.menuItemSierpinskiTriangle.Checked)
+                {
+                    FractalViewer.SierpinskiTriangle sierp = new SierpinskiTriangle(g, this.colorDialog3.Color);
+                    this.Cursor = Cursors.WaitCursor;
+                    g.Clear(this.colorDialog2.Color);
+                    sierp.draw(pictureBox1.Width, pictureBox1.Height, (float)this.numericUpDownSierp.Value);
+                    this.Cursor = Cursors.Default;
+                }
+                #endregion
+                #region newton's method
+                else if (this.menuItemNewtonsMethodx4y42xy.Checked)
+                {
+                    FractalViewer.NewtonsMethod newton = new NewtonsMethod(g, ComplexColors);
+                    this.Cursor = Cursors.WaitCursor;
+                    newton.draw(this.pictureBox1.Width, this.pictureBox1.Height);
+                    this.Cursor = Cursors.Default;
+                }
+                #endregion
+                #region Box Fractal
+                else if (this.menuItemBoxFractal.Checked)
+                {
+                    FractalViewer.BoxFractal box = new BoxFractal(g, this.colorDialog2.Color, this.colorDialog3.Color, (float)this.numericUpDownBoxFractal.Value);
+                    this.Cursor = Cursors.WaitCursor;
+                    box.draw(this.pictureBox1.Width, this.pictureBox1.Height);
+                    this.Cursor = Cursors.Default;
+                }
+                #endregion
+
+            }
+            e.Graphics.DrawImageUnscaled(backBuffer, 0, 0,this.pictureBox1.Width,this.pictureBox1.Height);
 		}
 
+        /// <summary>
+        /// Redraw fractal on resize of form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 		private void Form1_Resize(object sender, System.EventArgs e)
 		{
 			if(backBuffer != null)
@@ -945,191 +943,192 @@ namespace FractalViewer
 			this.pictureBox1.BackColor = this.colorDialog2.Color;
 			this.pictureBox1.Invalidate();
 		}
-
-		private void menuItem3_Click(object sender, System.EventArgs e)
-		{
-			this.labelViewLast.Visible = true;
-			this.numericUpDownOrbitDispaly.Visible = true;
-			this.menuItemOrbit_XsquareMinus2.Checked = true;
+        
+        /// <summary>
+        /// Hide and Uncheck All
+        /// </summary>
+        private void HideEverything()
+        {
+            /*
+             * Labels
+             */
+            this.labelBoxFractal.Visible = false;
+            this.labelComplexParam.Visible = false;
+            this.labeli.Visible = false;
+            this.labelPlus.Visible = false;
+            this.labelSeed.Visible = false;
+            this.labelViewLast.Visible = false;
+            
+            /*
+             * numeric up/down
+             */
+            this.numericUpDownBoxFractal.Visible = false;
+            this.numericUpDownComplex.Visible = false;
+            this.numericUpDownOrbitDispaly.Visible = false;
+            this.numericUpDownReal.Visible = false;
+            this.numericUpDownSeed.Visible = false;
+            this.numericUpDownSierp.Visible = false;
+            
+            /*
+             * menu item
+             */
+			this.menuItemOrbit_XsquareMinus2.Checked = false;
 			this.menuItemMandelbrotSet.Checked = false;
 			this.menuItemJuliaSet.Checked = false;
 			this.menuItemSierpinskiTriangle.Checked = false;
-			this.menuItem7.Checked = false;
-			this.labelSeed.Visible = true;
+			this.menuItemNewtonsMethodx4y42xy.Checked = false;
 			this.menuItemBoxFractal.Checked = false;
-			this.labelComplexParam.Visible = false;
-			this.labeli.Visible = false;
-			this.labelPlus.Visible = false;
-			this.numericUpDownComplex.Visible = false;
-			this.numericUpDownReal.Visible = false;
+
+            /*
+             * Panels
+             */
+	        this.panelOrbit.Visible = false;
+
+			backBuffer = null;
+        }
+
+        /// <summary>
+        /// Draw Orbits of x^2-2
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemOrbit_XsquareMinus2_Click(object sender, System.EventArgs e)
+		{
+            HideEverything();
+
+            this.menuItemOrbit_XsquareMinus2.Checked = true;
+            this.labelViewLast.Visible = true;
+            this.numericUpDownOrbitDispaly.Visible = true;
             this.panelOrbit.Visible = true;
-            this.labelBoxFractal.Visible = false;
-            this.numericUpDownBoxFractal.Visible = false;
-            this.numericUpDownSierp.Visible = false;
-			
-
 			this.numericUpDownSeed.Visible = true;
-			backBuffer = null;
+
 			this.pictureBox1.Invalidate();
-			
 		}
 
-		private void menuItem4_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Mandelbrot was selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemMandelbrotSet_Click(object sender, System.EventArgs e)
 		{
-			this.labelViewLast.Visible = false;
-			this.numericUpDownOrbitDispaly.Visible = false;
-			this.menuItemOrbit_XsquareMinus2.Checked = false;
+            HideEverything();
+
 			this.menuItemMandelbrotSet.Checked = true;
-			this.menuItemJuliaSet.Checked = false;
-			this.labelSeed.Visible = false;
-			this.menuItemSierpinskiTriangle.Checked = false;
-			this.menuItem7.Checked = false;
-			this.menuItemBoxFractal.Checked = false;
-			this.numericUpDownSeed.Visible = false;
-			this.labelComplexParam.Visible = false;
-			this.labeli.Visible = false;
-			this.labelPlus.Visible = false;
-            this.panelOrbit.Visible = false;
-            this.labelBoxFractal.Visible = false;
-            this.numericUpDownBoxFractal.Visible = false;
-            this.numericUpDownSierp.Visible = false;
-
-			this.numericUpDownComplex.Visible = false;
-			this.numericUpDownReal.Visible = false;
-			backBuffer = null;
 			this.pictureBox1.Invalidate();
 		}
 
-
-		private void menuItem5_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Julia Set was selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemJuliaSet_Click(object sender, System.EventArgs e)
 		{
-			this.labelViewLast.Visible = false;
-			this.numericUpDownOrbitDispaly.Visible = false;
-			this.menuItemOrbit_XsquareMinus2.Checked = false;
-			this.menuItemMandelbrotSet.Checked = false;
+            HideEverything();
+
 			this.menuItemJuliaSet.Checked = true;
-			this.menuItemSierpinskiTriangle.Checked = false;
-			this.menuItem7.Checked = false;
-			this.labelSeed.Visible = false;
-			this.menuItemBoxFractal.Checked = false;
-			this.numericUpDownSeed.Visible = false;
 			this.labelComplexParam.Visible = true;
             this.panelOrbit.Visible = true;
-            this.labelBoxFractal.Visible = false;
-            this.numericUpDownBoxFractal.Visible = false;
-            this.numericUpDownSierp.Visible = false;
-
 			this.labeli.Visible = true;
 			this.labelPlus.Visible = true;
 			this.numericUpDownComplex.Visible = true;
 			this.numericUpDownReal.Visible = true;
-			backBuffer = null;
 			this.pictureBox1.Invalidate();
-
 		}
 
-		private void numericUpDown1_ValueChanged(object sender, System.EventArgs e)
+        /// <summary>
+        /// Numeric Real value changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void numericUpDownReal_ValueChanged(object sender, System.EventArgs e)
 		{
 			this.pictureBox1.Invalidate();
 		}
 
-		private void menuItem6_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Sierpinski's Triangle was selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemSierpinskiTriangle_Click(object sender, System.EventArgs e)
 		{
-            this.labelViewLast.Visible = false;
-            this.numericUpDownOrbitDispaly.Visible = false;
-            this.labelSeed.Visible = false;
-            this.numericUpDownSeed.Visible = false;
-            this.menuItemOrbit_XsquareMinus2.Checked = false;
-            this.menuItemMandelbrotSet.Checked = false;
-            this.menuItemJuliaSet.Checked = false;
+            HideEverything();
+
             this.menuItemSierpinskiTriangle.Checked = true;
-            this.menuItemBoxFractal.Checked = false;
-            this.menuItem7.Checked = false;
-            this.labelComplexParam.Visible = false;
-            this.labeli.Visible = false;
-            this.labelPlus.Visible = false;
-            this.numericUpDownComplex.Visible = false;
-            this.numericUpDownReal.Visible = false;
             this.panelOrbit.Visible = true;
             this.labelBoxFractal.Visible = true;
-            this.numericUpDownBoxFractal.Visible = false;
             this.numericUpDownSierp.Visible = true;
-
-
-            this.backBuffer = null;
             this.pictureBox1.Invalidate();
 		}
 
-		private void menuItem7_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Newton's Method was selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemNewtonsMethodx4y42xy_Click(object sender, System.EventArgs e)
 		{
-			this.labelViewLast.Visible = false;
-			this.numericUpDownOrbitDispaly.Visible = false;
-			this.labelSeed.Visible = false;
-			this.numericUpDownSeed.Visible = false;
-			this.menuItemOrbit_XsquareMinus2.Checked = false;
-			this.menuItemMandelbrotSet.Checked = false;
-			this.menuItemJuliaSet.Checked = false;
-			this.menuItemSierpinskiTriangle.Checked = false;
-			this.menuItem7.Checked = true;
-			this.menuItemBoxFractal.Checked = false;
-			this.labelComplexParam.Visible = false;
-			this.labeli.Visible = false;
-			this.labelPlus.Visible = false;
-			this.numericUpDownComplex.Visible = false;
-			this.numericUpDownReal.Visible = false;
-            this.panelOrbit.Visible = false;
-            this.labelBoxFractal.Visible = false;
-            this.numericUpDownBoxFractal.Visible = false;
-            this.numericUpDownSierp.Visible = false;
+            HideEverything();
 
-			this.backBuffer = null;
+			this.menuItemNewtonsMethodx4y42xy.Checked = true;
 			this.pictureBox1.Invalidate();
 		}
 
-		private void menuItem8_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Draw Box Fractal
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemBoxFractal_Click(object sender, System.EventArgs e)
 		{
-			this.labelViewLast.Visible = false;
-			this.numericUpDownOrbitDispaly.Visible = false;
-			this.labelSeed.Visible = false;
-			this.numericUpDownSeed.Visible = false;
-			this.menuItemOrbit_XsquareMinus2.Checked = false;
-			this.menuItemMandelbrotSet.Checked = false;
-			this.menuItemJuliaSet.Checked = false;
-			this.menuItemSierpinskiTriangle.Checked = false;
-			this.menuItem7.Checked = false;
+            HideEverything();
+
 			this.menuItemBoxFractal.Checked = true;
-			this.labelComplexParam.Visible = false;
-			this.labeli.Visible = false;
-			this.labelPlus.Visible = false;
-			this.numericUpDownComplex.Visible = false;
-			this.numericUpDownReal.Visible = false;
             this.panelOrbit.Visible = true;
             this.labelBoxFractal.Visible = true;
             this.numericUpDownBoxFractal.Visible = true;
-            this.numericUpDownSierp.Visible = false;
-
-
-			this.backBuffer = null;
 			this.pictureBox1.Invalidate();
 		}
 
-		private void menuItem11_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// About Message Box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemAbout_Click(object sender, System.EventArgs e)
 		{
-			MessageBox.Show("Developed by William Andrus (c) 2006-2008 All Right Reserved.\nVersion 1.3\n\nResource:\"A First Course in Chaotic Dynamical Systems\" by Robert L. Devaney","About Fractal Viewer",MessageBoxButtons.OK,MessageBoxIcon.Information);
+			MessageBox.Show("Developed by William Andrus (c) 2006-2013 All Right Reserved.\nResource:\"A First Course in Chaotic Dynamical Systems\" by Robert L. Devaney","About Fractal Viewer",MessageBoxButtons.OK,MessageBoxIcon.Information);
 		}
 
-		private void menuItem12_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Save Image As 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemSaveImageAs_Click(object sender, System.EventArgs e)
 		{	
 			SaveImage saveimage = new SaveImage(this.backBuffer);
 			saveimage.Show();
 		}
 
-		private void menuItem15_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Exit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemExit_Click(object sender, System.EventArgs e)
 		{
 			this.Close();
 		}
 
-		private void menuItem17_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Orbits color changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemColorOrbit_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -1137,7 +1136,12 @@ namespace FractalViewer
             }
 		}
 
-		private void menuItem18_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Background Color Changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemBackground_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialog2.ShowDialog() == DialogResult.OK)
             {
@@ -1146,7 +1150,12 @@ namespace FractalViewer
             }
 		}
 
-		private void menuItem20_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Color for fractals changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemColorFractals_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialog3.ShowDialog() == DialogResult.OK)
             {
@@ -1154,7 +1163,12 @@ namespace FractalViewer
             }
 		}
 
-		private void menuItem22_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// CS Color 1 Change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemCSColor1_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialogComplex1.ShowDialog() == DialogResult.OK)
             {
@@ -1162,7 +1176,12 @@ namespace FractalViewer
             }
 		}
 
-		private void menuItem23_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// CS Color 2 Change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemCSColor2_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialogComplex2.ShowDialog() == DialogResult.OK)
             {
@@ -1170,7 +1189,12 @@ namespace FractalViewer
             }
 		}
 
-		private void menuItem24_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// CS Color 4 Change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemCSColor3_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialogComplex3.ShowDialog() == DialogResult.OK)
             {
@@ -1178,7 +1202,12 @@ namespace FractalViewer
             }
 		}
 
-		private void menuItem25_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// CS Color 4 Change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemCSColor4_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialogComplex4.ShowDialog() == DialogResult.OK)
             {
@@ -1186,7 +1215,12 @@ namespace FractalViewer
             }
 		}
 
-		private void menuItem26_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// CS Color 5 change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemCSColor5_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialogComplex5.ShowDialog() == DialogResult.OK)
             {
@@ -1194,7 +1228,12 @@ namespace FractalViewer
             }
 		}
 
-		private void menuItem27_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// CS Color 6 change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemCSColor6_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialogComplex6.ShowDialog() == DialogResult.OK)
             {
@@ -1202,7 +1241,12 @@ namespace FractalViewer
             }
 		}
 
-		private void menuItem28_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// CS color 7 change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemCSColor7_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialogComplex7.ShowDialog() == DialogResult.OK)
             {
@@ -1210,7 +1254,12 @@ namespace FractalViewer
             }
 		}
 
-		private void menuItem29_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// CS Color 8 change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemCSColor8_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialogComplex8.ShowDialog() == DialogResult.OK)
             {
@@ -1218,7 +1267,12 @@ namespace FractalViewer
             }
 		}
 
-		private void menuItem30_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// CS color 9 change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemCSColor9_Click(object sender, System.EventArgs e)
 		{
             if (this.colorDialogComplex9.ShowDialog() == DialogResult.OK)
             {
@@ -1226,34 +1280,62 @@ namespace FractalViewer
             }
 		}
 
-		private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        /// <summary>
+        /// Print Document Page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void printDocument_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
 		{
-
-			e.Graphics.DrawImage(this.backBuffer,new System.Drawing.Rectangle(0,0,this.pageSetupDialog1.PageSettings.PaperSize.Width,this.pageSetupDialog1.PageSettings.PaperSize.Height));
+			e.Graphics.DrawImage(this.backBuffer,new System.Drawing.Rectangle(0,0,this.pageSetupDialog.PageSettings.PaperSize.Width,this.pageSetupDialog.PageSettings.PaperSize.Height));
 		}
 
-		private void menuItem36_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Print Fractal
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemPrint_Click(object sender, System.EventArgs e)
 		{
-			
-			this.printDocument1.Print();
+			this.printDocument.Print();
 		}
 
-		private void menuItem37_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Page Setup Dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+		private void menuItemPageSetup_Click(object sender, System.EventArgs e)
 		{
-			this.pageSetupDialog1.ShowDialog();
+			this.pageSetupDialog.ShowDialog();
 		}
 
-		private void menuItem38_Click(object sender, System.EventArgs e)
+        /// <summary>
+        /// Create another form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuItemNew_Click(object sender, System.EventArgs e)
 		{
 			Form1 newForm = new Form1();
 			newForm.Show();
 		}
 
+        /// <summary>
+        /// Precision value change on box fractal
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void numericUpDownBoxFractal_ValueChanged(object sender, EventArgs e)
         {
             this.pictureBox1.Invalidate();
         }
 
+        /// <summary>
+        /// Precision Value Change on Sierpinski
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void numericUpDownSierp_ValueChanged(object sender, EventArgs e)
         {
             this.pictureBox1.Invalidate();
